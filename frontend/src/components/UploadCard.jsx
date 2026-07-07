@@ -7,11 +7,20 @@ import FileInfo from './FileInfo';
  *
  * @param {Object} props
  * @param {File} props.file - Current selected file.
+ * @param {boolean} props.uploading - Loading state of upload process.
+ * @param {Object} props.statusMessage - Object containing text and type of status message.
  * @param {function} props.onFileSelect - Callback when file is selected.
  * @param {function} props.onFileRemove - Callback when file is removed.
  * @param {function} props.onUpload - Callback when upload button is clicked.
  */
-const UploadCard = ({ file, onFileSelect, onFileRemove, onUpload }) => {
+const UploadCard = ({ 
+  file, 
+  onFileSelect, 
+  onFileRemove, 
+  onUpload, 
+  uploading = false, 
+  statusMessage = null 
+}) => {
   const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
@@ -33,6 +42,7 @@ const UploadCard = ({ file, onFileSelect, onFileRemove, onUpload }) => {
         onChange={handleFileChange}
         accept=".pdf"
         className="hidden"
+        disabled={uploading}
       />
 
       {/* Upload Zone / File Info */}
@@ -53,15 +63,24 @@ const UploadCard = ({ file, onFileSelect, onFileRemove, onUpload }) => {
         </div>
       )}
 
-      {/* Upload Button - Always visible, disabled until file is selected */}
+      {/* Upload Button - Always visible, disabled until file is selected or during upload */}
       <Button
         onClick={onUpload}
-        disabled={!file}
+        disabled={!file || uploading}
         className="w-full mt-5 flex items-center justify-center space-x-2"
       >
-        <span>Upload Menu</span>
-        <span role="img" aria-label="Sparkles">✨</span>
+        <span>{uploading ? 'Uploading...' : 'Upload Menu'}</span>
+        {!uploading && <span role="img" aria-label="Sparkles">✨</span>}
       </Button>
+
+      {/* Status Message */}
+      {statusMessage && (
+        <p className={`mt-4 text-sm font-semibold ${
+          statusMessage.type === 'success' ? 'text-green-600' : 'text-red-600'
+        }`}>
+          {statusMessage.text}
+        </p>
+      )}
     </div>
   );
 };

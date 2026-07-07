@@ -6,10 +6,47 @@ import UploadCard from '../components/UploadCard';
  */
 const Home = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState(null);
 
-  const handleUpload = () => {
+  const handleFileSelect = (file) => {
+    setSelectedFile(file);
+    setStatusMessage(null);
+  };
+
+  const handleFileRemove = () => {
+    setSelectedFile(null);
+    setStatusMessage(null);
+  };
+
+  const handleUpload = async () => {
     if (!selectedFile) return;
-    console.log(selectedFile);
+
+    setUploading(true);
+    setStatusMessage(null);
+
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Upload failed');
+      }
+
+      const data = await response.json();
+      console.log('Upload successful:', data);
+      setStatusMessage({ text: 'Menu uploaded successfully.', type: 'success' });
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      setStatusMessage({ text: 'Upload failed.', type: 'error' });
+    } finally {
+      setUploading(false);
+    }
   };
 
   return (
@@ -35,9 +72,11 @@ const Home = () => {
 
         <UploadCard
           file={selectedFile}
-          onFileSelect={setSelectedFile}
-          onFileRemove={() => setSelectedFile(null)}
+          onFileSelect={handleFileSelect}
+          onFileRemove={handleFileRemove}
           onUpload={handleUpload}
+          uploading={uploading}
+          statusMessage={statusMessage}
         />
       </main>
     </div>
