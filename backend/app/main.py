@@ -1,5 +1,7 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
+from app.services.pdf_service import extract_text_from_pdf
+from app.services.chunk_service import chunk_text
 import shutil
 import os
 
@@ -41,7 +43,13 @@ def upload_pdf(file: UploadFile = File(...)):
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
+    # Extract text from the uploaded PDF
+    extracted_text = extract_text_from_pdf(file_path)
+    chunks = chunk_text(extracted_text)
+
     return {
-        "message": "File uploaded successfully",
-        "filename": file.filename
-    }
+    "message": "File uploaded successfully",
+    "filename": file.filename,
+    "total_chunks": len(chunks),
+    "chunks": chunks
+}
