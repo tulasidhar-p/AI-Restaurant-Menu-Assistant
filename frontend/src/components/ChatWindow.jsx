@@ -30,7 +30,7 @@ const DUMMY_CONVERSATION = [
  * @param {Array} [props.messages] - Optional external array of message objects.
  * @param {function} [props.onSendMessage] - Optional external callback function when a message is sent.
  */
-const ChatWindow = ({ messages: propMessages, onSendMessage }) => {
+const ChatWindow = ({ messages: propMessages, onSendMessage, disabled = false }) => {
   // Use local state if messages aren't passed down from a parent component (Home.jsx)
   const [localMessages, setLocalMessages] = useState(DUMMY_CONVERSATION);
   const activeMessages = propMessages || localMessages;
@@ -98,7 +98,7 @@ const ChatWindow = ({ messages: propMessages, onSendMessage }) => {
 
       {/* Input Form Area */}
       <div className="p-4 border-t border-slate-100 bg-white">
-        <ChatInput onSendMessage={handleSendMessage} />
+        <ChatInput onSendMessage={handleSendMessage} disabled={disabled} />
       </div>
     </div>
   );
