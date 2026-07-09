@@ -29,6 +29,7 @@ const DUMMY_CONVERSATION = [
  * @param {Object} props
  * @param {Array} [props.messages] - Optional external array of message objects.
  * @param {function} [props.onSendMessage] - Optional external callback function when a message is sent.
+ * @param {boolean} [props.disabled] - Whether the input and send button should be disabled.
  */
 const ChatWindow = ({ messages: propMessages, onSendMessage, disabled = false }) => {
   // Use local state if messages aren't passed down from a parent component (Home.jsx)
@@ -71,24 +72,23 @@ const ChatWindow = ({ messages: propMessages, onSendMessage, disabled = false })
   };
 
   return (
-    <div className="flex flex-col bg-white border border-slate-200/80 rounded-2xl shadow-xl max-w-3xl w-full h-[600px] overflow-hidden transition-all duration-300">
+    <div className="flex flex-col bg-white/85 backdrop-blur-md border border-slate-200/70 rounded-3xl shadow-2xl shadow-slate-200/60 max-w-4xl w-full h-[650px] overflow-hidden transition-all duration-500">
       {/* Header section of the Chat Window */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/50 backdrop-blur-sm">
-        <div className="flex items-center space-x-3">
-          {/* Decorative small visual status */}
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+      <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 bg-white/40 backdrop-blur-sm">
+        <div className="flex items-center space-x-3.5">
+          {/* Decorative Menu Assistant Icon */}
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-md shadow-violet-500/20 text-base">
+            🍽️
+          </div>
           <div>
-            <h2 className="text-sm font-semibold text-slate-800">Menu Assistant</h2>
-            <p className="text-xs text-slate-400">Ask about items, ingredients, or prices</p>
+            <h2 className="text-sm font-bold text-slate-800 tracking-tight">Menu Companion</h2>
+            <p className="text-xs text-slate-400 font-medium">Ask about items, ingredients, or prices</p>
           </div>
         </div>
-        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-violet-50 text-violet-600 border border-violet-100">
-          Sprint 5 Demo
-        </span>
       </div>
 
       {/* Messages Scrollable Area */}
-      <div className="flex-grow overflow-y-auto px-6 py-4 bg-slate-50/30 scroll-smooth">
+      <div className="flex-grow overflow-y-auto px-6 py-5 bg-slate-50/10 scroll-smooth flex flex-col gap-1.5">
         {activeMessages.map((message) => (
           <ChatMessage key={message.id} message={message} />
         ))}
@@ -97,7 +97,7 @@ const ChatWindow = ({ messages: propMessages, onSendMessage, disabled = false })
       </div>
 
       {/* Input Form Area */}
-      <div className="p-4 border-t border-slate-100 bg-white">
+      <div className="p-5 border-t border-slate-100 bg-white/50 backdrop-blur-sm">
         <ChatInput onSendMessage={handleSendMessage} disabled={disabled} />
       </div>
     </div>

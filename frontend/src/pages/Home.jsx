@@ -87,29 +87,40 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col text-slate-800 antialiased">
-      <header className="py-6 px-8 border-b border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <span className="text-3xl" role="img" aria-label="Robot and burger">🤖🍔</span>
-            <span className="font-extrabold text-xl tracking-tight text-violet-600">AI Restaurant Menu Assistant</span>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50/20 via-slate-50 to-slate-100/50 flex flex-col text-slate-800 antialiased">
+      <header className="py-5 px-6 md:px-8 border-b border-slate-200/60 bg-white/70 backdrop-blur-md sticky top-0 z-50 transition-all">
+        <div className="max-w-5xl mx-auto flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <span className="text-3xl transform hover:rotate-12 transition-transform duration-300 select-none" role="img" aria-label="Robot and burger">🤖🍔</span>
+            <div>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2">
+                <span className="font-bold text-lg md:text-xl tracking-tight text-slate-800">
+                  AI Restaurant Menu Assistant
+                </span>
+                <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-[10px] font-semibold text-emerald-600 border border-emerald-100/60 w-fit">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>Online</span>
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 mt-0.5 font-medium">Ask anything about your uploaded menu.</p>
+            </div>
           </div>
         </div>
       </header>
 
-      <main className="flex-grow flex flex-col items-center justify-center px-4 py-12 w-full max-w-6xl mx-auto">
+      <main className="flex-grow flex flex-col items-center justify-center px-4 py-8 md:py-16 max-w-5xl w-full mx-auto transition-all">
         {/* Upload Container - kept in DOM for transition animations */}
         <div className={`transition-all duration-500 ease-in-out flex flex-col items-center w-full ${
           uploaded 
             ? 'opacity-0 max-h-0 overflow-hidden pointer-events-none scale-95' 
             : 'opacity-100 max-h-[1000px] scale-100'
         }`}>
-          <div className="text-center mb-8 max-w-lg">
-            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+          <div className="text-center mb-10 max-w-xl">
+            <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent leading-tight">
               AI Restaurant Menu Assistant
             </h1>
-            <p className="mt-4 text-base sm:text-lg text-slate-500 leading-relaxed">
-              Upload a restaurant menu PDF to get started.
+            <p className="mt-4 text-base md:text-lg text-slate-500 font-medium leading-relaxed">
+              Upload your restaurant menu PDF and immediately ask our AI assistant about dishes, pricing, or ingredients.
             </p>
           </div>
 
