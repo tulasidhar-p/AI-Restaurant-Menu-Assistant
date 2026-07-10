@@ -1,8 +1,9 @@
 import React from 'react';
+import MarkdownRenderer from './MarkdownRenderer';
 
 /**
  * ChatMessage component to render an individual message in the chat feed.
- * Supports distinct styles for user and AI senders, including circular text avatars.
+ * Supports distinct styles for user and AI senders, typing indicator, and markdown formatting.
  *
  * @param {Object} props
  * @param {Object} props.message - The message object.
@@ -16,7 +17,7 @@ const ChatMessage = ({ message }) => {
   const isThinking = text === '🤖 Thinking...';
 
   return (
-    <div className={`flex items-start gap-3.5 w-full my-3.5 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
+    <div className={`flex items-start gap-3.5 w-full my-3.5 animate-message-fade-in ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
       {/* Circular Avatar */}
       <div 
         className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 select-none shadow-sm transition-transform duration-200 hover:scale-105 ${
@@ -36,11 +37,21 @@ const ChatMessage = ({ message }) => {
             isUser 
               ? 'bg-gradient-to-br from-violet-600 to-indigo-600 text-white rounded-2xl rounded-tr-none shadow-md shadow-violet-600/10 font-medium tracking-wide' 
               : isThinking
-                ? 'bg-slate-50 text-slate-400 rounded-2xl rounded-tl-none border border-slate-200/40 font-medium italic animate-pulse shadow-sm'
+                ? 'bg-slate-50 rounded-2xl rounded-tl-none border border-slate-200/40 shadow-sm'
                 : 'bg-white text-slate-800 rounded-2xl rounded-tl-none border border-slate-200/60 shadow-sm font-normal'
           }`}
         >
-          {text}
+          {isThinking ? (
+            <div className="flex items-center gap-1.5 py-1.5 px-0.5 select-none" aria-label="Thinking">
+              <span className="w-2 h-2 rounded-full bg-slate-400/80 animate-typing-dot" />
+              <span className="w-2 h-2 rounded-full bg-slate-400/80 animate-typing-dot animation-delay-100" />
+              <span className="w-2 h-2 rounded-full bg-slate-400/80 animate-typing-dot animation-delay-200" />
+            </div>
+          ) : isUser ? (
+            text
+          ) : (
+            <MarkdownRenderer text={text} />
+          )}
         </div>
       </div>
     </div>
@@ -48,3 +59,4 @@ const ChatMessage = ({ message }) => {
 };
 
 export default ChatMessage;
+
