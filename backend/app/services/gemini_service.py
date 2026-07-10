@@ -10,8 +10,7 @@ load_dotenv()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Create model
-model = genai.GenerativeModel("gemini-2.5-flash")
-
+model = genai.GenerativeModel("gemini-flash-latest")
 
 def generate_answer(query, context):
     """
@@ -35,6 +34,12 @@ Customer Question:
 Answer:
 """
 
-    response = model.generate_content(prompt)
+    try:
+        response = model.generate_content(prompt)
+        return response.text
 
-    return response.text
+    except Exception as e:
+        print("\n===== GEMINI ERROR =====")
+        print(e)
+        print("========================\n")
+        raise
