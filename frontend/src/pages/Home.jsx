@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import UploadCard from '../components/UploadCard';
+import SupportedPdfNotice from '../components/SupportedPdfNotice';
 import ChatWindow from '../components/ChatWindow';
 import { uploadMenu, askQuestion } from '../services/api';
 
@@ -124,6 +125,8 @@ const Home = () => {
             </p>
           </div>
 
+          <SupportedPdfNotice />
+
           <UploadCard
             file={selectedFile}
             onFileSelect={handleFileSelect}
@@ -132,6 +135,10 @@ const Home = () => {
             uploading={uploading}
             statusMessage={statusMessage}
           />
+
+          <p className="mt-4 text-xs text-slate-400 font-medium text-center">
+            <span className="font-semibold text-slate-500">Tip:</span> For the best experience, upload a searchable text-based restaurant menu PDF.
+          </p>
         </div>
 
         {/* Chat Container - kept in DOM for transition animations */}
