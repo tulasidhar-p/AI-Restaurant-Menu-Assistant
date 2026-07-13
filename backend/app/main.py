@@ -27,7 +27,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://YOUR-VERCEL-APP.vercel.app",
+        "https://ai-restaurant-menu-assistant.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
